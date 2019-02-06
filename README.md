@@ -91,6 +91,24 @@ Where:
 * `artitacts` - path to objects to archive, these can be downloaded if job
   completes successfully
 
+What this configuration does is:
+
+* load a alpine docker image for pandoc
+* invoke the build stage which
+  * initialises with alpine package update and install
+  * runs the `render` job which makes the given target
+  * on successful completion, the target HTML is archived for download
+
+GitLab is easy to configure and easy to navigate. There are many other features
+including scheduling pipelines, configuring jobs by branch. One feature that I
+have used on Maven / Java projects is caching the `.m2` directory. This speeds
+up the build as you don't have a completely new environment for each build, but
+can rely on previous cached artefacts. GitLab also provides a clear cache button
+on the pipeline page. 
+
+GitLab also provides additional services that can be integrated with you
+project, for example: JIRA tracking, Kubernetes, Prometheus monitoring.
+
 # [Bitbucket](https://bitbucket.org)
 
 # [GitHub](https://github.com/)
