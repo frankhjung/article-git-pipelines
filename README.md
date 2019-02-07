@@ -91,9 +91,9 @@ Where:
 * `artitacts` - path to objects to archive, these can be downloaded if job
   completes successfully
 
-What this configuration does is:
+What this pipeline configuration does is:
 
-* load a alpine docker image for pandoc
+* load a Alpine Docker image for pandoc
 * invoke the build stage which
   * initialises with alpine package update and install
   * runs the `render` job which makes the given target
@@ -104,14 +104,65 @@ including scheduling pipelines, configuring jobs by branch. One feature that I
 have used on Maven / Java projects is caching the `.m2` directory. This speeds
 up the build as you don't have a completely new environment for each build, but
 can rely on previous cached artefacts. GitLab also provides a clear cache button
-on the pipeline page. 
+on the pipeline page.
 
 GitLab also provides additional services that can be integrated with you
 project, for example: JIRA tracking, Kubernetes, Prometheus monitoring.
 
 # [Bitbucket](https://bitbucket.org)
 
+The example is publicly available [here](https://gitlab.com/frankhjung1/article-git-pipelines).
+The configuration is similar to that from GitLab. The pipeline and settings are
+easily navigated to using the side-bar.
+
+![Pipeline job history](images/bitbucket-jobs.png)
+
+The pipeline configuration is similar. But there are important differences.
+
+```yaml
+pipelines:
+  branches:
+    master:
+      - step:
+          name: render
+          image: conoria/alpine-pandoc
+          trigger: automatic
+          script:
+            - apk update && apk add make curl
+            - export TARGET=README.html
+            - make -B ${TARGET}
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${TARGET}"
+```
+
+Here the pipeline will be triggered automatically on commits to `master` branch.
+A Docker image can be defined at the level of the pipeline step. Variables can
+be defined and read from the Bitbucket settings page. This is useful for
+recording secrets that you don't want to have exposed in your source code.
+However, internal script variables are set via the script language, which here
+is Bash. Finally, in order for the build artefacts to be preserved after the
+pipeline completes, you can publish to a downloads location. This requires that
+a secure variable be configured, as described
+[here](https://confluence.atlassian.com/bitbucket/deploy-build-artifacts-to-bitbucket-downloads-872124574.html).
+If you don't the pipeline workspace is purged on completion.
+
+![Downloads](images/bitbucket-downloads.png)
+
+Pipeline build performance is very good, where this entire step took only around
+11 seconds to complete.
+
+The free account limits you to 50 minutes per month with 1GB storage.
+
+That you have to externally / manually configure repository settings has some
+benefits. The consequence though, is that there are settings that are not
+recorded by your project.
+
+A feature of being able to customise the Docker image used at the step level is
+that your build and test steps can use different images. This is great if you
+want to trial your application on a production like image.
+
+
 # [GitHub](https://github.com/)
+
 
 # Summary
 
