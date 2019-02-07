@@ -43,6 +43,7 @@ to try:
 
 * [Kaggle](https://www.kaggle.com/)
 * [DigitalOcean](https://www.digitalocean.com/)
+* [Travis CI](https://travis-ci.org/)
 
 # [GitLab](https://gitlab.com/)
 
@@ -109,6 +110,7 @@ on the pipeline page.
 GitLab also provides additional services that can be integrated with you
 project, for example: JIRA tracking, Kubernetes, Prometheus monitoring.
 
+
 # [Bitbucket](https://bitbucket.org)
 
 The example is publicly available [here](https://gitlab.com/frankhjung1/article-git-pipelines).
@@ -163,6 +165,72 @@ want to trial your application on a production like image.
 
 # [GitHub](https://github.com/)
 
+When you create a GitHub repository, there is an option to include [Azure
+Pipelines](https://azure.microsoft.com/en-au/services/devops/pipelines/).
+However this is not integrated to GitHub directly, but is configured under [Azure
+DevOps](https://dev.azure.com/). Broadly, the steps to set-up a pipeline are:
+
+* sign up to Azure pipelines
+* create a project
+* add GitHub repository to project
+* configure pipeline job
+
+![Azure DevOps Pipelines](images/azure-pipelines.png)
+
+Builds can be run and managed from the Azure DevOps dashboard. There appears no
+way to manually trigger a build from the GitHub repository. Though, if you
+commit it will happily trigger a build for you. But, again, you need to be on
+the Azure DevOps dashboard to monitor the pipeline steps.
+
+The following YAML configuration uses an Azure provided Ubuntu 16.04 image.
+There are limited images, but they are maintained and kept installed packages
+are kept up to date. There are [many pre-installed
+packages](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/linux/Ubuntu1604-README.md).
+
+```yaml
+trigger:
+  - master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+
+  - script: |
+      sudo apt-get install pandoc
+    displayName: 'install_pandoc'
+
+  - script: |
+      make -B README.html
+    displayName: 'render'
+
+  - powershell: gci env:* | sort-object name | Format-Table -AutoSize | Out-File $env:BUILD_ARTIFACTSTAGINGDIRECTORY/environment-variables.txt
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(System.DefaultWorkingDirectory)/README.html'
+      artifactName: README
+```
+
+If the package you need is not installed, then you can install it if available
+in the Ubuntu package repositories. The default user profile is not `root`, so
+installation requires `sudo`.
+
+![Azure DevOps Job History](images/azure-job.png)
+
+Finally, to provide the generated artefacts as a downloaded archive you need to
+invoke specific `PublishBuildArtifacts` task as described
+[here](https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/build-artifacts?view=azure-devops&tabs=yaml).
+
+![Azure DevOps Download Artefacts](images/azure-artefacts.png)
+
+Azure is fast as it uses images that Microsoft built images that they host. The
+above job to install `pandoc` and render this page as HTML takes only 1 minute.
+
+I found the biggest negative to Azure Pipelines was the poor integration to the
+GitHub dashboard. Instead, you are strongly encouraged to manage pipelines
+using the Azure DevOps dashboard.
+
 
 # Summary
 
@@ -175,6 +243,7 @@ executable description for your project that explicitly lists dependencies.
 Hosted pipelines also lightens the effort for provisioning and maintaining your
 own infrastructure. This could be a great benefit to projects where
 time constraints limit ones ability to prepare an environment.
+
 
 # Acknowledgements
 
