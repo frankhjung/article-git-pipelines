@@ -56,7 +56,9 @@ Viewing jobs gives you a pipelines history:
 
 ![Pipeline job history](images/gitlab-jobs.png)
 
-The YAML configuration `.gitlab-ci.yml` looks like:
+The YAML configuration
+[.gitlab-ci.yml](https://github.com/frankhjung/article-git-pipelines/blob/master/.gitlab-ci.yml)
+looks like:
 
 ```yaml
 image: conoria/alpine-pandoc
@@ -121,7 +123,7 @@ easily navigated into using the side-bar.
 
 The pipeline configuration is similar. But there are important differences.
 Below is the configuration file
-[bitbucket-pipelines.yml](https://bitbucket.org/frankhjung/articles-git-pipelines/src/master/azure-pipelines.yml):
+[bitbucket-pipelines.yml](https://bitbucket.org/frankhjung/articles-git-pipelines/src/master/bitbucket-pipelines.yml):
 
 ```yaml
 pipelines:
@@ -190,6 +192,9 @@ There are limited images, but they are maintained and kept installed packages
 are kept up to date. There are [many pre-installed
 packages](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/linux/Ubuntu1604-README.md).
 
+Below is the Azure pipeline configuration
+[azure-pipelines.yml](https://github.com/frankhjung/article-git-pipelines/blob/master/azure-pipelines.yml):
+
 ```yaml
 trigger:
   - master
@@ -222,8 +227,9 @@ installation requires `sudo`.
 ![Azure DevOps Job History](images/azure-job.png)
 
 Finally, to provide the generated artefacts as a downloaded archive you need to
-invoke specific `PublishBuildArtifacts` task as described
-[here](https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/build-artifacts?view=azure-devops&tabs=yaml).
+invoke specific
+[PublishBuildArtifacts](https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/build-artifacts?view=azure-devops&tabs=yaml)
+task.
 
 ![Azure DevOps Download Artefacts](images/azure-artefacts.png)
 
@@ -232,20 +238,21 @@ install `pandoc` and render this page as HTML takes only 1 minute.
 
 I found the biggest negative to Azure Pipelines was the poor integration to the
 GitHub dashboard. Instead, you are strongly encouraged to manage pipelines
-using the Azure DevOps dashboard.
+using the [Azure DevOps](https://dev.azure.com/FrankJung) dashboard.
 
 
 # Summary
 
-Git pipelines will not be suitable for every circumstance. There are however,
-clear advantages to using a hosted pipeline that ensures that your project
-builds somewhere other than your laptop. It also removes the cost of building
-and maintaining your own infrastructure. The pipeline configuration is also
-augments your projects documentation for build, test and deployment. It is an
-independent executable description for your project that explicitly lists
-dependencies. Hosted pipelines also lightens the effort for provisioning and
-maintaining your own infrastructure. This could be a great benefit to projects
-where time constraints limit ones ability to prepare an environment.
+Git pipelines will not be suitable for every circumstance. (For example Ansible
+infrastructure projects) There are clear advantages to using a hosted pipeline
+that ensures that your project builds somewhere other than on your machine. It
+also removes the cost of building and maintaining your own infrastructure. The
+pipeline configuration also augments your projects documentation for build, test
+and deployment. It is an independent executable description for your project
+that explicitly lists dependencies. Hosted pipelines also eases the effort for
+provisioning and maintaining your own CI infrastructure. This could be of great
+benefit to projects where time constraints limit ones ability to prepare an
+environment.
 
 
 # Acknowledgements
