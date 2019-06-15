@@ -12,9 +12,9 @@ Git has become the _de facto_ standard for version control. This has given rise
 to many vendors hosting Git repositories. Each vendor provides Git functionality
 such as branching, pull requests, project membership. There is now growing
 competition to provide facilities for Continuous Integration / Continuous
-Delivery (CI/CD). This is supported by _pipelines_. Pipelines are extensible suite
-of tools to build, test and deploy source code. Even data hosting sites like
-[Kaggle](https://www.kaggle.com/) now support
+Delivery (CI/CD). This is supported by _pipelines_. Pipelines are extensible
+suite of tools to build, test and deploy source code. Even data hosting sites
+like [Kaggle](https://www.kaggle.com/) now support
 [pipelines](https://www.kaggle.com/dansbecker/pipelines).
 
 This article provides a brief summary of some pipeline features from three
@@ -110,7 +110,8 @@ can leverage previous cached artefacts. GitLab also provides a _clear cache_
 button on the pipeline page.
 
 GitLab also provides additional services that can be integrated with you
-project, for example: JIRA tracking, Kubernetes, Prometheus monitoring.
+project, for example: JIRA tracking, Kubernetes,
+[Prometheus](https://prometheus.io/) monitoring.
 
 
 # [Bitbucket](https://bitbucket.org)
