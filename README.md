@@ -183,14 +183,16 @@ DevOps](https://dev.azure.com/). Broadly, the steps to set-up a pipeline are:
 
 ![Azure DevOps Pipelines](images/azure-pipelines.png)
 
-Builds can be run and managed from the Azure DevOps dashboard. There appears no
-way to manually trigger a build from the GitHub repository. Though, if you
+Builds are managed from the Azure DevOps dashboard. There appears to be no way
+to manually trigger a build directly from the GitHub repository. Though, if you
 commit it will happily trigger a build for you. But, again, you need to be on
-the Azure DevOps dashboard to monitor the pipeline steps.
+the Azure DevOps dashboard to monitor the pipeline jobs.
 
-The following YAML configuration uses an Azure provided Ubuntu 16.04 image.
-There are limited images, but they are maintained and kept installed packages
-are kept up to date. There are [many pre-installed
+The following
+[YAML](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema)
+configuration uses Ubuntu 16.04 image provide by Azure. There are limited
+nummber of images, but they are well maintained with packages kept up-to-date.
+They come with [many pre-installed
 packages](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/linux/Ubuntu1604-README.md).
 
 Below is the Azure pipeline configuration
@@ -222,7 +224,7 @@ steps:
 ```
 
 If the package you need is not installed, then you can install it if available
-in the Ubuntu package repositories. The default user profile is not `root`, so
+from the Ubuntu package repositories. The default user profile is not `root`, so
 installation requires `sudo`.
 
 ![Azure DevOps Job History](images/azure-job.png)
