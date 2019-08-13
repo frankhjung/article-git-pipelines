@@ -258,6 +258,14 @@ benefit to projects where time constraints limit ones ability to prepare an
 environment.
 
 
+# Addendum
+
+Since writing this there has been an announcement from GitHub on support of
+pipeline automation called [GitHub
+Actions](https://github.com/features/actions/). I've registered to the Beta
+program and hopefully will have some new information to post here shortly.
+
+
 # Acknowledgements
 
 * the CSS stylesheet used here based off [killercup/pandoc.css](https://gist.github.com/killercup/5917178)
