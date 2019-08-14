@@ -138,7 +138,9 @@ pipelines:
             - apk update && apk add make curl
             - export TARGET=README.html
             - make -B ${TARGET}
-            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${TARGET}"
+            - curl -X POST --user "${BB_AUTH_STRING}" \
+                "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" \
+                --form files=@"${TARGET}"
 ```
 
 Here the pipeline will be triggered automatically on commits to `master` branch.
@@ -215,7 +217,11 @@ steps:
       make -B README.html
     displayName: 'render'
 
-  - powershell: gci env:* | sort-object name | Format-Table -AutoSize | Out-File $env:BUILD_ARTIFACTSTAGINGDIRECTORY/environment-variables.txt
+  - powershell: |
+      gci env:* | 
+      sort-object name | 
+      Format-Table -AutoSize | 
+      Out-File $env:BUILD_ARTIFACTSTAGINGDIRECTORY/environment-variables.txt
 
   - task: PublishBuildArtifacts@1
     inputs:
