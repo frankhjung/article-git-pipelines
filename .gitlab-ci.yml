@@ -13,7 +13,7 @@ before_script:
 render:
   stage: build
   script:
-    - make $TARGET
+    - make
   artifacts:
     paths:
       - $TARGET
