@@ -1,7 +1,7 @@
 ---
 title: 'Git Pipelines'
 author: '[frank.jung@marlo.com.au](mailto:frank.jung@marlo.com.au)'
-date: '6 February 2019'
+date: '15 August 2019'
 output:
   html_document: default
 ---
@@ -11,31 +11,29 @@ output:
 
 Git has become the _de facto_ standard for version control. This has given rise
 to many vendors hosting Git repositories. Each vendor provides Git functionality
-such as branching, pull requests, project membership. 
+such as branching, pull requests, project membership.
 
 Traditionally, external tools such as [Jenkins](https://jenkins.io) or
 [GoCD](https://www.gocd.org) would be required for Continuous Integration /
-Continuous Delivery (CI/CD). 
+Continuous Delivery (CI/CD). However, now there is growing competition amongst
+Git vendors to also offer these facilities.
 
-Now, there is now growing competition to provide these facilities from hosted
-Git repositories.
-
-CI/CD is supported by _pipelines_. Pipelines are extensible suite of tools to
-build, test and deploy source code. Even data hosting sites like
+To do this, vendors have provided _pipelines_. Pipelines are an extensible suite
+of tools to build, test and deploy source code. Even data hosting sites like
 [Kaggle](https://www.kaggle.com/) now support
 [pipelines](https://www.kaggle.com/dansbecker/pipelines).
 
 These integrated CI/CD features greatly streamline solution delivery and has
-also given rise to new ways of things called, GitOps.
+also given rise to new ways of doing things like,
+[GitOps](https://queue.acm.org/detail.cfm?id=3237207).
 
-This article provides a brief summary of some pipeline features from three
-popular Git hosting sites, [GitLab](https://gitlab.com/),
+This article will provide a brief summary of some pipeline features from three
+popular Git hosting sites: [GitLab](https://gitlab.com/),
 [Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/).
 
-This article is written in [Git
-Markdown](https://guides.github.com/features/mastering-markdown/). As such, it
-will used as an example project to render the Markdown to HTML using features
-from each of these sites.
+To demonstrate these features I will render this [Git
+Markdown](https://guides.github.com/features/mastering-markdown/) article into
+HTML.
 
 The features being explored are:
 
@@ -44,15 +42,15 @@ The features being explored are:
 * stages
 * archive of generated artefacts
 
-The workflow is:
+The pipeline workflow is:
 
 1. install [GNU Make](https://www.gnu.org/software/make/)
 1. install [pandoc](https://pandoc.org/) - this is used to render Markdown to HTML
 1. render HTML from Markdown
 1. archive rendered document
 
-Below is a list of other source repositories that offer pipelines that you may
-also like to try:
+There are many more repository hosting sites that offer pipelines. You may like
+to explore:
 
 * [Kaggle](https://www.kaggle.com/)
 * [DigitalOcean](https://www.digitalocean.com/)
@@ -61,8 +59,11 @@ also like to try:
 
 # [GitLab](https://gitlab.com/)
 
-GitLab pipelines are a well integrated tool. CI/CD pipelines are easily accessed
-from the sidebar:
+[GitLab](https://gitlab.com/) was launched in 2011. Here we will be evaluating
+the features of the Community Edition.
+
+GitLab pipelines are a well integrated tool. The CI/CD
+pipelines are easily accessed from the sidebar:
 
 ![CI/CD on sidebar](images/gitlab-sidebar.png)
 
@@ -70,9 +71,9 @@ Viewing jobs gives you a pipelines history:
 
 ![Pipeline job history](images/gitlab-jobs.png)
 
-The YAML configuration
+The [YAML](https://docs.gitlab.com/ce/ci/yaml/) configuration
 [.gitlab-ci.yml](https://github.com/frankhjung/article-git-pipelines/blob/master/.gitlab-ci.yml)
-looks like:
+for this pipeline is:
 
 ```yaml
 image: conoria/alpine-pandoc
@@ -98,51 +99,55 @@ render:
 
 Where:
 
-* `image` - specifies a custom Docker image from Docker Hub
-* `variables` - define a variable to be used in all jobs
+* `image` - specifies a custom Docker image from Docker Hub (can be custom per *job*)
+* `variables` - define a variable to be used in all *jobs*
 * `stages` - declares the jobs to run
-* `before_script` - commands to run before all jobs
-* `render` - name of job associated with a stage. Jobs of the same stage are run in parallel
-* `stage` - associates a job with a stage
-* `script` - commands to run for job
-* `artitacts` - path to objects to archive, these can be downloaded if job
-  completes successfully
+* `before_script` - commands to run before all *jobs*
+* `render` - name of *job* associated with a stage. Jobs of the same stage are run in parallel
+* `stage` - associates a *job* with a stage
+* `script` - commands to run for this *job*
+* `artitacts` - path to objects to archive, these can be downloaded if the *job* completes successfully
 
 What this pipeline configuration does is:
 
-* load a Alpine Docker image for [pandoc](https://pandoc.org/)
+* load an Alpine Docker image for [pandoc](https://pandoc.org/)
 * invoke the build stage which
   * initialises with alpine package update and install
-  * runs the `render` job which makes the given target
+  * runs the `render` job which generates the given target HTML
   * on successful completion, the target HTML is archived for download
 
 GitLab is easy to configure and easy to navigate. There are many other features
-including scheduling pipelines and configuring jobs by branch. One feature that
-I have used on Maven / Java projects is caching the `.m2` directory. This speeds
-up the build as you don't have a completely new environment for each build, but
-can leverage previous cached artefacts. GitLab also provides a _clear cache_
-button on the pipeline page.
+including scheduling pipelines and the ability to configuring jobs by branch.
+One feature that I have used on Java / Maven projects is caching of the `.m2`
+directory. This speeds up the build as you don't have a completely new
+environment for each build, but can leverage previous cached artefacts. GitLab
+also provides a _clear cache_ button on the pipeline page.
 
-GitLab also supports hosting static
+GitLab also supports hosting of static
 [pages](https://about.gitlab.com/product/pages/). This is simple to set-up and
-use, requiring only an additional deployment stage to move the static content to
-a directory called `public`. This makes it very easy to host a projects
-generated documentation and test results.
+use, requiring only an additional `pages` job in the deployment `stage` to move
+static content into a directory called `public`. This makes it very easy to host
+a projects generated documentation and test results.
 
-Finally, GitLab also provides additional services that can be integrated with you
-project, for example: JIRA tracking, Kubernetes, and monitoring using
+Finally, GitLab provides additional services that can be integrated with your
+project. For example: [JIRA](https://www.atlassian.com/software/jira) tracking,
+[Kubernetes](https://kubernetes.io/), and monitoring using
 [Prometheus](https://prometheus.io/).
 
 
 # [Bitbucket](https://bitbucket.org)
 
-The example is publicly available [here](https://gitlab.com/frankhjung1/article-git-pipelines).
-The configuration is similar to that from GitLab. The pipeline and settings are
+Atlassian's [Bitbucket](https://bitbucket.org) was launched in 2008. As such it
+integrates with other Atlassian software like Jira, HipChat, Confluence and Bamboo.
+
+This example project is publicly available [here](https://gitlab.com/frankhjung1/article-git-pipelines).
+
+The pipeline configuration is similar to that from GitLab. Pipelines and settings are
 easily navigated into using the side-bar.
 
 ![Pipeline job history](images/bitbucket-jobs.png)
 
-The pipeline configuration is similar. But there are important differences.
+The pipeline configuration is also similar. But there are important differences.
 Below is the configuration file
 [bitbucket-pipelines.yml](https://bitbucket.org/frankhjung/articles-git-pipelines/src/master/bitbucket-pipelines.yml):
 
@@ -158,8 +163,10 @@ pipelines:
             - apk update && apk add make curl
             - export TARGET=README.html
             - make -B ${TARGET}
-            - curl -X POST --user "${BB_AUTH_STRING}" \
-                "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" \
+            - curl -X POST --user "${BB_AUTH_STRING}" +
+                "https://api.bitbucket.org/2.0/" +
+                "repositories/${BITBUCKET_REPO_OWNER}/" +
+                "${BITBUCKET_REPO_SLUG}/downloads " +
                 --form files=@"${TARGET}"
 ```
 
@@ -172,7 +179,7 @@ is Bash. Finally, in order for the build artefacts to be preserved after the
 pipeline completes, you can publish to a downloads location. This requires that
 a secure variable be configured, as described
 [here](https://confluence.atlassian.com/bitbucket/deploy-build-artifacts-to-bitbucket-downloads-872124574.html).
-If you don't the pipeline workspace is purged on completion.
+If you don't, the pipeline workspace is purged on completion.
 
 ![Downloads](images/bitbucket-downloads.png)
 
@@ -183,7 +190,7 @@ One limitation is that the free account limits you to only 50 minutes per month
 with 1GB storage.
 
 That you have to externally / manually configure repository settings has some
-benefits. The consequence though, is that there are settings that are not
+benefits. The consequence though, is that there are then settings that are not
 recorded by your project.
 
 A feature of being able to customise the Docker image used at the step level is
@@ -192,6 +199,11 @@ want to trial your application on a production like image.
 
 
 # [GitHub](https://github.com/)
+
+GitHub has been around since 2008. It was recently [acquired by
+Microsoft](https://blogs.microsoft.com/blog/2018/10/26/microsoft-completes-github-acquisition/).
+It hosts over 100 million repositories with more than 40 million registered
+users ([source](https://github.com/about/facts)).
 
 When you create a GitHub repository, there is an option to include [Azure
 Pipelines](https://azure.microsoft.com/en-au/services/devops/pipelines/).
@@ -207,13 +219,13 @@ DevOps](https://dev.azure.com/). Broadly, the steps to set-up a pipeline are:
 
 Builds are managed from the Azure DevOps dashboard. There appears to be no way
 to manually trigger a build directly from the GitHub repository. Though, if you
-commit it will happily trigger a build for you. But, again, you need to be on
+commit, it will happily trigger a build for you. But, again, you need to be on
 the Azure DevOps dashboard to monitor the pipeline jobs.
 
 The following
 [YAML](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema)
-configuration uses Ubuntu 16.04 image provide by Azure. There are limited
-nummber of images, but they are well maintained with packages kept up-to-date.
+configuration uses a Ubuntu 16.04 image provided by Azure. There are limited
+number of images, but they are well maintained with packages kept up-to-date.
 They come with [many pre-installed
 packages](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/linux/Ubuntu1604-README.md).
 
@@ -238,9 +250,9 @@ steps:
     displayName: 'render'
 
   - powershell: |
-      gci env:* | 
-      sort-object name | 
-      Format-Table -AutoSize | 
+      gci env:* |
+      sort-object name |
+      Format-Table -AutoSize |
       Out-File $env:BUILD_ARTIFACTSTAGINGDIRECTORY/environment-variables.txt
 
   - task: PublishBuildArtifacts@1
@@ -255,46 +267,51 @@ installation requires `sudo`.
 
 ![Azure DevOps Job History](images/azure-job.png)
 
-Finally, to provide the generated artefacts as a downloaded archive you need to
-invoke specific
+To create an archive of artefacts for download, you need to invoke a specific
 [PublishBuildArtifacts](https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/build-artifacts?view=azure-devops&tabs=yaml)
 task.
 
 ![Azure DevOps Download Artefacts](images/azure-artefacts.png)
 
-Azure is fast as it uses images that Microsoft build and host. The above job to
-install `pandoc` and render this page as HTML takes only 1 minute.
+Azure is fast as it uses images that Microsoft manages and hosts. The above job
+to install `pandoc` and render this page as HTML takes only 1 minute.
 
 I found the biggest negative to Azure Pipelines was the poor integration to the
-GitHub dashboard. Instead, you are strongly encouraged to manage pipelines
-using the [Azure DevOps](https://dev.azure.com/FrankJung) dashboard.
+GitHub dashboard. Instead, you are strongly encouraged to manage pipelines using
+the [Azure
+DevOps](https://docs.microsoft.com/en-us/azure/devops/report/dashboards)
+dashboard.
 
 
-# Summary
-
-Git pipelines will not be suitable for every circumstance. (For example Ansible
-infrastructure projects) There are clear advantages to using a hosted pipeline
-that ensures that your project builds somewhere other than on your machine. It
-also removes the cost of building and maintaining your own infrastructure. The
-pipeline configuration also augments your projects documentation for build, test
-and deployment. It is an independent executable description for your project
-that explicitly lists dependencies. Hosted pipelines also eases the effort for
-provisioning and maintaining your own CI infrastructure. This could be of great
-benefit to projects where time constraints limit ones ability to prepare an
-environment.
-
-
-# Addendum
+## Addendum
 
 Since writing this there has been an announcement from GitHub on support of
 pipeline automation called [GitHub
 Actions](https://github.com/features/actions/). I've registered to the Beta
 program and hopefully will have some new information to post here shortly.
 
+# Summary
+
+Git pipelines will not be suitable in every circumstance. For example Ansible
+infrastructure projects. There are clear advantages to using a hosted pipeline
+that ensures that your project builds somewhere other than on your machine. It
+also removes the cost of building and maintaining your own infrastructure. The
+pipeline configuration augments your projects documentation for build, test and
+deployment. It is an independent executable description for your project that
+explicitly lists dependencies. Hosted pipelines ease the effort for
+provisioning and maintaining your own CI/CD infrastructure. This could be of great
+benefit to projects where time constraints limit ones ability to prepare an
+environment.
+
+Marlo is constantly looking at ways to increase our productivity and
+effectiveness in delivering solutions. Using hosted services like GitLab,
+further enables Marlo's Digital Enablement Platform.
+
 
 # Acknowledgements
 
 * the CSS stylesheet used here based off [killercup/pandoc.css](https://gist.github.com/killercup/5917178)
+
 
 # Links
 
