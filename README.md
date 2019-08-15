@@ -6,25 +6,38 @@ output:
   html_document: default
 ---
 
+
 # Introduction
 
 Git has become the _de facto_ standard for version control. This has given rise
 to many vendors hosting Git repositories. Each vendor provides Git functionality
-such as branching, pull requests, project membership. There is now growing
-competition to provide facilities for Continuous Integration / Continuous
-Delivery (CI/CD). This is supported by _pipelines_. Pipelines are extensible
-suite of tools to build, test and deploy source code. Even data hosting sites
-like [Kaggle](https://www.kaggle.com/) now support
-[pipelines](https://www.kaggle.com/dansbecker/pipelines).
+such as branching, pull requests, project membership. 
 
-This article provides a brief summary of some pipeline features from three
-popular hosting sites, [GitLab](https://gitlab.com/),
-[Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/).
+Traditionally, external tools such as [Jenkins](https://jenkins.io) or
+[GoCD](https://www.gocd.org) would be required for Continuous Integration /
+Continuous Delivery (CI/CD). 
 
-This markdown for this article will be used to show features for each of these
+Now, there is now growing competition to provide these facilities from hosted
 Git repositories.
 
-The features being tested are:
+CI/CD is supported by _pipelines_. Pipelines are extensible suite of tools to
+build, test and deploy source code. Even data hosting sites like
+[Kaggle](https://www.kaggle.com/) now support
+[pipelines](https://www.kaggle.com/dansbecker/pipelines).
+
+These integrated CI/CD features greatly streamline solution delivery and has
+also given rise to new ways of things called, GitOps.
+
+This article provides a brief summary of some pipeline features from three
+popular Git hosting sites, [GitLab](https://gitlab.com/),
+[Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/).
+
+This article is written in [Git
+Markdown](https://guides.github.com/features/mastering-markdown/). As such, it
+will used as an example project to render the Markdown to HTML using features
+from each of these sites.
+
+The features being explored are:
 
 * use of Docker images
 * customise the build environment
@@ -38,16 +51,17 @@ The workflow is:
 1. render HTML from Markdown
 1. archive rendered document
 
-Here are other source repositories that offer pipelines that you may also like
-to try:
+Below is a list of other source repositories that offer pipelines that you may
+also like to try:
 
 * [Kaggle](https://www.kaggle.com/)
 * [DigitalOcean](https://www.digitalocean.com/)
 * [Travis CI](https://travis-ci.org/)
 
+
 # [GitLab](https://gitlab.com/)
 
-GitLab pipelines are a well integrated tool. CI / CD pipelines are easily accessed
+GitLab pipelines are a well integrated tool. CI/CD pipelines are easily accessed
 from the sidebar:
 
 ![CI/CD on sidebar](images/gitlab-sidebar.png)
@@ -96,7 +110,7 @@ Where:
 
 What this pipeline configuration does is:
 
-* load a Alpine Docker image for pandoc
+* load a Alpine Docker image for [pandoc](https://pandoc.org/)
 * invoke the build stage which
   * initialises with alpine package update and install
   * runs the `render` job which makes the given target
@@ -109,9 +123,15 @@ up the build as you don't have a completely new environment for each build, but
 can leverage previous cached artefacts. GitLab also provides a _clear cache_
 button on the pipeline page.
 
-GitLab also provides additional services that can be integrated with you
-project, for example: JIRA tracking, Kubernetes,
-[Prometheus](https://prometheus.io/) monitoring.
+GitLab also supports hosting static
+[pages](https://about.gitlab.com/product/pages/). This is simple to set-up and
+use, requiring only an additional deployment stage to move the static content to
+a directory called `public`. This makes it very easy to host a projects
+generated documentation and test results.
+
+Finally, GitLab also provides additional services that can be integrated with you
+project, for example: JIRA tracking, Kubernetes, and monitoring using
+[Prometheus](https://prometheus.io/).
 
 
 # [Bitbucket](https://bitbucket.org)
