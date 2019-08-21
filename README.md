@@ -216,9 +216,9 @@ the Azure DevOps dashboard to monitor the pipeline jobs.
 
 The following
 [YAML](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema)
-configuration uses a Ubuntu 16.04 image provided by Azure. There are limited
-number of images, but they are well maintained with packages kept up-to-date.
-They come with [many pre-installed
+configuration uses a [Ubuntu](https://ubuntu.com) 16.04 image provided by Azure.
+There are limited number of images, but they are well maintained with packages
+kept up-to-date. They come with [many pre-installed
 packages](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/linux/Ubuntu1604-README.md).
 
 Below is the Azure pipeline configuration
@@ -297,11 +297,13 @@ provisioning and maintaining your own CI/CD infrastructure. This could be of gre
 benefit to projects where time constraints limit ones ability to prepare an
 environment.
 
-Marlo is constantly looking at ways to increase our productivity and
-effectiveness in delivering solutions. Of the three reviewed here, we found
-GitLab the easiest to adopt and use. It's YAML based syntax is simple, but
-functionality broad. Our developers have quickly picked up and implement the
-pipeline concepts. I'd recommend anyone to give Git pipelines a go!
+At Marlo we are constantly looking at ways to increase our productivity and
+effectiveness in solution delivery. Of the three pipelines looked at here, we
+found GitLab the easiest to adopt and use. It's YAML based syntax is simple, but
+functionality broad. Our developers have quickly picked up and implemented
+pipeline concepts.
+
+So, yes: I think it *is* a great time to switch to a Git CI/CD toolset!
 
 
 # Links
@@ -310,7 +312,7 @@ The code for this project can be viewed from these Git repositories:
 
 * https://bitbucket.org/frankhjung/articles-git-pipelines
 * https://github.com/frankhjung/article-git-pipelines
-* https://gitlab.com/theMarloGroup/articles/git-pipelines
+* https://gitlab.com/frankhjung1/article-git-pipelines.git
 
 There are many more repository hosting sites that offer pipelines. You may like
 to explore:
