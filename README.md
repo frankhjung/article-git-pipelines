@@ -9,53 +9,41 @@ output:
 
 # Introduction
 
-Git has become the _de facto_ standard for version control. This has given rise
-to many vendors hosting Git repositories. Each vendor provides Git functionality
-such as branching, pull requests, project membership.
+Git has become the _de facto_ standard for version control, but until recently 
+you needed external tools such as [Jenkins](https://jenkins.io) or
+[GoCD](https://www.gocd.org) for managing Continuous Integration /
+Continuous Delivery (CI/CD) pipelines. 
 
-Traditionally, external tools such as [Jenkins](https://jenkins.io) or
-[GoCD](https://www.gocd.org) would be required for Continuous Integration /
-Continuous Delivery (CI/CD). However, now there is growing competition amongst
-Git vendors to also offer these facilities.
-
-To do this, vendors have provided _pipelines_. Pipelines are an extensible suite
-of tools to build, test and deploy source code. Even data hosting sites like
-[Kaggle](https://www.kaggle.com/) now support
-[pipelines](https://www.kaggle.com/dansbecker/pipelines).
-
-These integrated CI/CD features greatly streamline solution delivery and has
-also given rise to new ways of doing things like,
+Now, though, we're seeing vendors like [Gitlab](https://gitlab.com) and others 
+providing pipeline features - extensible suites of tools to build, test and
+deploy code. These integrated CI/CD features greatly streamline solution 
+delivery and have given rise to whole new ways of doing things like
 [GitOps](https://queue.acm.org/detail.cfm?id=3237207).
 
-This article will provide a brief summary of some pipeline features from three
-popular Git hosting sites: [GitLab](https://gitlab.com/),
-[Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/).
+In this article we demonstrate and compare the current pipeline features from 
+three popular Git hosting sites: [GitLab](https://gitlab.com/),
+[Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/), and ask 
+the question "It it time to switch from your current CI/CD toolset?"
 
-To demonstrate these features I will render this [Git
-Markdown](https://guides.github.com/features/mastering-markdown/) article into
-HTML.
+# Exercise
 
-The features being explored are:
+To demonstrate these features, we use pipelines render the [Git
+Markdown](https://guides.github.com/features/mastering-markdown/) version of 
+this article into an HTML document.
 
-* use of Docker images
-* customise the build environment
-* stages
-* archive of generated artefacts
+The pipeline features we are exploring are:
+
+* using of Docker images
+* customising the build environment
+* pipeline stages
+* archiving generated artefacts
 
 The pipeline workflow is:
 
 1. install [GNU Make](https://www.gnu.org/software/make/)
-1. install [pandoc](https://pandoc.org/) - this is used to render Markdown to HTML
-1. render HTML from Markdown
+1. install [pandoc](https://pandoc.org/) - we are using this to render Markdown to HTML
+1. render the HTML document from Markdown
 1. archive rendered document
-
-There are many more repository hosting sites that offer pipelines. You may like
-to explore:
-
-* [Kaggle](https://www.kaggle.com/)
-* [DigitalOcean](https://www.digitalocean.com/)
-* [Travis CI](https://travis-ci.org/)
-
 
 # [GitLab](https://gitlab.com/)
 
@@ -321,3 +309,10 @@ This project can be viewed from these Git repositories:
 * https://github.com/frankhjung/article-git-pipelines
 * https://gitlab.com/frankhjung1/article-git-pipelines
 * https://gitlab.com/theMarloGroup/articles/git-pipelines
+
+There are many more repository hosting sites that offer pipelines. You may like
+to explore:
+
+* [Kaggle](https://www.kaggle.com/)
+* [DigitalOcean](https://www.digitalocean.com/)
+* [Travis CI](https://travis-ci.org/)
