@@ -9,26 +9,27 @@ output:
 
 # Introduction
 
-Git has become the _de facto_ standard for version control, but until recently 
+Git has become the _de facto_ standard for version control, but until recently
 you needed external tools such as [Jenkins](https://jenkins.io) or
 [GoCD](https://www.gocd.org) for managing Continuous Integration /
-Continuous Delivery (CI/CD) pipelines. 
+Continuous Delivery (CI/CD) pipelines.
 
-Now, though, we're seeing vendors like [Gitlab](https://gitlab.com) and others 
+Now, though, we're seeing vendors like [Gitlab](https://gitlab.com) and others
 providing pipeline features - extensible suites of tools to build, test and
-deploy code. These integrated CI/CD features greatly streamline solution 
+deploy code. These integrated CI/CD features greatly streamline solution
 delivery and have given rise to whole new ways of doing things like
 [GitOps](https://queue.acm.org/detail.cfm?id=3237207).
 
-In this article we demonstrate and compare the current pipeline features from 
+In this article we demonstrate and compare the current pipeline features from
 three popular Git hosting sites: [GitLab](https://gitlab.com/),
-[Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/), and ask 
+[Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/), and ask
 the question "It it time to switch from your current CI/CD toolset?"
+
 
 # Exercise
 
-To demonstrate these features, we use pipelines render the [Git
-Markdown](https://guides.github.com/features/mastering-markdown/) version of 
+To demonstrate these features, we use pipelines to render the [Git
+Markdown](https://guides.github.com/features/mastering-markdown/) version of
 this article into an HTML document.
 
 The pipeline features we are exploring are:
@@ -44,6 +45,7 @@ The pipeline workflow is:
 1. install [pandoc](https://pandoc.org/) - we are using this to render Markdown to HTML
 1. render the HTML document from Markdown
 1. archive rendered document
+
 
 # [GitLab](https://gitlab.com/)
 
@@ -126,12 +128,14 @@ project. For example: [JIRA](https://www.atlassian.com/software/jira) tracking,
 # [Bitbucket](https://bitbucket.org)
 
 Atlassian's [Bitbucket](https://bitbucket.org) was launched in 2008. As such it
-integrates with other Atlassian software like Jira, HipChat, Confluence and Bamboo.
+integrates with other Atlassian software like Jira, HipChat, Confluence and
+Bamboo.
 
-This example project is publicly available [here](https://gitlab.com/frankhjung1/article-git-pipelines).
+This example project is publicly available
+[here](https://gitlab.com/frankhjung1/article-git-pipelines).
 
-The pipeline configuration is similar to that from GitLab. Pipelines and settings are
-easily navigated into using the side-bar.
+The pipeline configuration is similar to that from GitLab. Pipelines and
+settings are easily navigated into using the side-bar.
 
 ![Pipeline job history](images/bitbucket-jobs.png)
 
@@ -262,7 +266,8 @@ task.
 ![Azure DevOps Download Artefacts](images/azure-artefacts.png)
 
 Azure is fast as it uses images that Microsoft manages and hosts. The above job
-to install `pandoc` and render this page as HTML takes only 1 minute.
+to install [pandoc](https://pandoc.org/) and render this page as HTML takes only
+1 minute.
 
 I found the biggest negative to Azure Pipelines was the poor integration to the
 GitHub dashboard. Instead, you are strongly encouraged to manage pipelines using
@@ -271,12 +276,13 @@ DevOps](https://docs.microsoft.com/en-us/azure/devops/report/dashboards)
 dashboard.
 
 
-## Addendum
+#### Addendum
 
-Since writing this there has been an announcement from GitHub on support of
-pipeline automation called [GitHub
-Actions](https://github.com/features/actions/). I've registered to the Beta
-program and hopefully will have some new information to post here shortly.
+Since I first wrote this review GitHub announced the support of pipeline
+automation called [GitHub Actions](https://github.com/features/actions/). I've
+registered to the Beta program and hopefully will have some new information to
+post here shortly.
+
 
 # Summary
 
@@ -292,22 +298,18 @@ benefit to projects where time constraints limit ones ability to prepare an
 environment.
 
 Marlo is constantly looking at ways to increase our productivity and
-effectiveness in delivering solutions. Using hosted services like GitLab,
-further enables Marlo's Digital Enablement Platform.
-
-
-# Acknowledgements
-
-* the CSS stylesheet used here based off [killercup/pandoc.css](https://gist.github.com/killercup/5917178)
+effectiveness in delivering solutions. Of the three reviewed here, we found
+GitLab the easiest to adopt and use. It's YAML based syntax is simple, but
+functionality broad. Our developers have quickly picked up and implement the
+pipeline concepts. I'd recommend anyone to give Git pipelines a go!
 
 
 # Links
 
-This project can be viewed from these Git repositories:
+The code for this project can be viewed from these Git repositories:
 
 * https://bitbucket.org/frankhjung/articles-git-pipelines
 * https://github.com/frankhjung/article-git-pipelines
-* https://gitlab.com/frankhjung1/article-git-pipelines
 * https://gitlab.com/theMarloGroup/articles/git-pipelines
 
 There are many more repository hosting sites that offer pipelines. You may like
