@@ -11,11 +11,11 @@ output:
 
 Git has become the _de facto_ standard for version control, but until recently
 you needed external tools such as [Jenkins](https://jenkins.io) or
-[GoCD](https://www.gocd.org) for managing Continuous Integration /
-Continuous Delivery (CI/CD) pipelines.
+[GoCD](https://www.gocd.org) to manage Continuous Integration / Continuous
+Delivery (CI/CD) pipelines.
 
 Now, though, we're seeing vendors like [Gitlab](https://gitlab.com) and others
-providing pipeline features - extensible suites of tools to build, test and
+providing pipeline features with extensible suites of tools to build, test and
 deploy code. These integrated CI/CD features greatly streamline solution
 delivery and have given rise to whole new ways of doing things like
 [GitOps](https://queue.acm.org/detail.cfm?id=3237207).
@@ -23,7 +23,7 @@ delivery and have given rise to whole new ways of doing things like
 In this article we demonstrate and compare the current pipeline features from
 three popular Git hosting sites: [GitLab](https://gitlab.com/),
 [Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/), and ask
-the question "It it time to switch from your current CI/CD toolset?"
+the question: "Is it time to switch from your current CI/CD toolset?"
 
 
 # Exercise
@@ -52,8 +52,8 @@ The pipeline workflow is:
 [GitLab](https://gitlab.com/) was launched in 2011. Here we will be evaluating
 the features of the Community Edition.
 
-GitLab pipelines are a well integrated tool. The CI/CD
-pipelines are easily accessed from the sidebar:
+GitLab pipelines are a well integrated tool. The CI/CD pipelines are easily
+accessed from the sidebar:
 
 ![CI/CD on sidebar](images/gitlab-sidebar.png)
 
@@ -128,7 +128,7 @@ project. For example: [JIRA](https://www.atlassian.com/software/jira) tracking,
 # [Bitbucket](https://bitbucket.org)
 
 Atlassian's [Bitbucket](https://bitbucket.org) was launched in 2008. As such it
-integrates with other Atlassian software like Jira, HipChat, Confluence and
+integrates with other Atlassian software like JIRA, HipChat, Confluence and
 Bamboo.
 
 This example project is publicly available
@@ -182,8 +182,8 @@ One limitation is that the free account limits you to only 50 minutes per month
 with 1GB storage.
 
 That you have to externally / manually configure repository settings has some
-benefits. The consequence though, is that there are then settings that are not
-recorded by your project.
+benefits. The consequence though, is that there are then settings that are
+**not** recorded by your project.
 
 A feature of being able to customise the Docker image used at the step level is
 that your build and test steps can use different images. This is great if you
@@ -255,7 +255,7 @@ steps:
 
 If the package you need is not installed, then you can install it if available
 from the Ubuntu package repositories. The default user profile is not `root`, so
-installation requires `sudo`.
+installation requires the use of `sudo`.
 
 ![Azure DevOps Job History](images/azure-job.png)
 
@@ -276,11 +276,11 @@ DevOps](https://docs.microsoft.com/en-us/azure/devops/report/dashboards)
 dashboard.
 
 
-#### Addendum
+#### Update
 
 Since I first wrote this review GitHub announced the support of pipeline
 automation called [GitHub Actions](https://github.com/features/actions/). I've
-registered to the Beta program and hopefully will have some new information to
+registered to the beta program and hopefully will have some new information to
 post here shortly.
 
 
