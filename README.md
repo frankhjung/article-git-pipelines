@@ -25,19 +25,18 @@ three popular Git hosting sites: [GitLab](https://gitlab.com/),
 [Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/), and ask
 the question: "Is it time to switch from your current CI/CD toolset?"
 
-
 # Exercise
 
-To demonstrate these features, we use pipelines to render the [Git
+Let's use pipelines to render the [Git
 Markdown](https://guides.github.com/features/mastering-markdown/) version of
 this article into an HTML document.
 
-The pipeline features we are exploring are:
+The pipeline features we are using:
 
-* using of Docker images
+* using Docker images to execute build tasks
 * customising the build environment
 * pipeline stages
-* archiving generated artefacts
+* archiving generated artefacts - in this case a document, but in real life you might be archiving a built Docker image
 
 The pipeline workflow is:
 
@@ -46,13 +45,18 @@ The pipeline workflow is:
 1. render the HTML document from Markdown
 1. archive rendered document
 
+The code for this project can be viewed from these Git repositories:
+
+* https://bitbucket.org/frankhjung/articles-git-pipelines
+* https://github.com/frankhjung/article-git-pipelines
+* https://gitlab.com/frankhjung1/article-git-pipelines.git
 
 # [GitLab](https://gitlab.com/)
 
-[GitLab](https://gitlab.com/) was launched in 2011. Here we will be evaluating
+[GitLab](https://gitlab.com/) was launched in 2011. For this article we are evaluating
 the features of the Community Edition.
 
-GitLab pipelines are a well integrated tool. The CI/CD pipelines are easily
+GitLab's pipelines are a well integrated tool. The CI/CD pipelines are easily
 accessed from the sidebar:
 
 ![CI/CD on sidebar](images/gitlab-sidebar.png)
@@ -93,7 +97,7 @@ Where:
 * `variables` - define a variable to be used in all *jobs*
 * `stages` - declares the jobs to run
 * `before_script` - commands to run before all *jobs*
-* `render` - name of *job* associated with a stage. Jobs of the same stage are run in parallel
+* `render` - name of *job* associated with a stage. Jobs in the same stage are run in parallel
 * `stage` - associates a *job* with a stage
 * `script` - commands to run for this *job*
 * `artitacts` - path to objects to archive, these can be downloaded if the *job* completes successfully
@@ -108,16 +112,16 @@ What this pipeline configuration does is:
 
 GitLab is easy to configure and easy to navigate. There are many other features
 including scheduling pipelines and the ability to configuring jobs by branch.
-One feature that I have used on Java / Maven projects is caching of the `.m2`
+One useful feature for Java / Maven projects is caching of the `.m2`
 directory. This speeds up the build as you don't have a completely new
-environment for each build, but can leverage previous cached artefacts. GitLab
+environment for each build, but can leverage previous cached artefacts instead. GitLab
 also provides a _clear cache_ button on the pipeline page.
 
 GitLab also supports hosting of static
 [pages](https://about.gitlab.com/product/pages/). This is simple to set-up and
 use, requiring only an additional `pages` job in the deployment `stage` to move
 static content into a directory called `public`. This makes it very easy to host
-a projects generated documentation and test results.
+a project's generated documentation and test results.
 
 Finally, GitLab provides additional services that can be integrated with your
 project. For example: [JIRA](https://www.atlassian.com/software/jira) tracking,
@@ -127,19 +131,16 @@ project. For example: [JIRA](https://www.atlassian.com/software/jira) tracking,
 
 # [Bitbucket](https://bitbucket.org)
 
-Atlassian's [Bitbucket](https://bitbucket.org) was launched in 2008. As such it
-integrates with other Atlassian software like JIRA, HipChat, Confluence and
+Atlassian's [Bitbucket](https://bitbucket.org) was launched in 2008. It
+integrates closely with other Atlassian software like JIRA, HipChat, Confluence and
 Bamboo.
 
-This example project is publicly available
-[here](https://gitlab.com/frankhjung1/article-git-pipelines).
-
-The pipeline configuration is similar to that from GitLab. Pipelines and
+Pipeline configuration is similar to GitLab: pipelines and
 settings are easily navigated into using the side-bar.
 
 ![Pipeline job history](images/bitbucket-jobs.png)
 
-The pipeline configuration is also similar. But there are important differences.
+But there are some important differences.
 Below is the configuration file
 [bitbucket-pipelines.yml](https://bitbucket.org/frankhjung/articles-git-pipelines/src/master/bitbucket-pipelines.yml):
 
@@ -162,11 +163,15 @@ pipelines:
                 --form files=@"${TARGET}"
 ```
 
-Here the pipeline will be triggered automatically on commits to `master` branch.
-A Docker image can be defined at the level of the pipeline step. Variables can
+Here the pipeline will be triggered automatically (`trigger: automatic`) when you commit to the master branch.
+
+You can define a Docker image (`image: conoria/alpine-pandoc`) to provision at the level of the pipeline `step`. 
+
+Variables (`${BB_AUTH_STRING}`, `${BITBUCKET_REPO_OWNER}` and `${BITBUCKET_REPO_SLUG}`) can
 be defined and read from the Bitbucket settings page. This is useful for
 recording secrets that you don't want to have exposed in your source code.
-However, internal script variables are set via the script language, which here
+
+Internal script variables are set via the script language, which here
 is Bash. Finally, in order for the build artefacts to be preserved after the
 pipeline completes, you can publish to a downloads location. This requires that
 a secure variable be configured, as described
@@ -315,11 +320,7 @@ So, yes: I think it *is* a great time to switch to a Git CI/CD toolset!
 
 # Links
 
-The code for this project can be viewed from these Git repositories:
 
-* https://bitbucket.org/frankhjung/articles-git-pipelines
-* https://github.com/frankhjung/article-git-pipelines
-* https://gitlab.com/frankhjung1/article-git-pipelines.git
 
 There are many more repository hosting sites that offer pipelines. You may like
 to explore:
