@@ -286,22 +286,29 @@ post here shortly.
 
 # Summary
 
-Git pipelines will not be suitable in every circumstance. For example Ansible
-infrastructure projects. There are clear advantages to using a hosted pipeline
-that ensures that your project builds somewhere other than on your machine. It
-also removes the cost of building and maintaining your own infrastructure. The
-pipeline configuration augments your projects documentation for build, test and
-deployment. It is an independent executable description for your project that
-explicitly lists dependencies. Hosted pipelines ease the effort for
-provisioning and maintaining your own CI/CD infrastructure. This could be of great
-benefit to projects where time constraints limit ones ability to prepare an
-environment.
-
 At Marlo we are constantly looking at ways to increase our productivity and
 effectiveness in solution delivery. Of the three pipelines looked at here, we
 found GitLab the easiest to adopt and use. It's YAML based syntax is simple, but
 functionality broad. Our developers have quickly picked up and implemented
 pipeline concepts.
+
+Git pipelines will not be suitable in every circumstance. For example Ansible
+infrastructure projects. However, there are clear advantages to using a hosted
+pipeline that ensures that your project builds somewhere other than on your
+machine. It also removes the cost of building and maintaining your own
+infrastructure. This could be of great benefit to projects where time
+constraints limit ones ability to prepare an environment.
+
+The pipeline configuration augments your projects documentation for build, test
+and deployment. It is an independent executable description for your project
+that explicitly lists dependencies.
+
+Since writing this article in February 2019, there has been increased
+competition and continuous innovation amongst Git repository vendors: GitHub has
+introduced *actions*. In version [12.2](https://about.gitlab.com/releases/),
+GitLab has provided Directed Acyclic Graphs for their pipeline. Even [Docker
+Hub](https://hub.docker.com) has an automated pipeline that is triggered by
+changes to Git repositories.
 
 So, yes: I think it *is* a great time to switch to a Git CI/CD toolset!
 
