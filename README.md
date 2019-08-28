@@ -54,7 +54,7 @@ The code for this project can be viewed from these Git repositories:
 # GitLab
 
 [GitLab](https://gitlab.com/)'s Community Edition pipelines are a well-integrated
-tool, and are our current plpeline of choice. 
+tool, and are our current plpeline of choice.
 
 ## Example Pipeline
 
@@ -134,14 +134,14 @@ project. For example: [JIRA](https://www.atlassian.com/software/jira) tracking,
 
 ## Summary
 
-Overall, GitLab is easy to configure and easy to navigate, and provides Marlo with 
+Overall, GitLab is easy to configure and easy to navigate, and provides Marlo with
 our current preferred Git pipeline solution.
 
 
 # [Bitbucket](https://bitbucket.org)
 
-Atlassian's [Bitbucket](https://bitbucket.org) pipeline functionality and 
-configuration is similar to GitLab. 
+Atlassian's [Bitbucket](https://bitbucket.org) pipeline functionality and
+configuration is similar to GitLab.
 
 ## Example Pipeline
 
@@ -171,11 +171,11 @@ pipelines:
                 --form files=@"${TARGET}"
 ```
 
-Here the pipeline will be triggered automatically (`trigger: automatic`) when 
+Here the pipeline will be triggered automatically (`trigger: automatic`) when
 you commit to the master branch.
 
-You can define a Docker image (`image: conoria/alpine-pandoc`) to provision at 
-the level of the pipeline `step`. 
+You can define a Docker image (`image: conoria/alpine-pandoc`) to provision at
+the level of the pipeline `step`.
 
 Variables (`${BB_AUTH_STRING}`, `${BITBUCKET_REPO_OWNER}` and `${BITBUCKET_REPO_SLUG}`) can
 be defined and read from the Bitbucket settings page. This is useful for
@@ -323,11 +323,11 @@ and deployment. It is an independent executable description for your project
 that explicitly lists dependencies.
 
 Since the first draft of this article was written, there has been increasing
-competition and continuous innovation amongst Git repository vendors: 
+competition and continuous innovation amongst Git repository vendors:
+
 * GitHub has introduced [GitHub Actions](https://github.com/features/actions/).
-* GitLab has announced [Directed Acyclic Graphs](https://about.gitlab.com/2019/08/22/gitlab-12-2-released/#directed-acyclic-graphs-dag-for-gitlab-pipelines) for their pipeline. 
-* Even [Docker Hub](https://hub.docker.com) now has an automated pipeline that 
-is triggered by changes to Git repositories.
+* GitLab has announced [Directed Acyclic Graphs](https://about.gitlab.com/2019/08/22/gitlab-12-2-released/#directed-acyclic-graphs-dag-for-gitlab-pipelines) for their pipeline.
+* Even [Docker Hub](https://hub.docker.com) now has an automated pipeline that is triggered by changes to Git repositories.
 
 So, yes: it *is* a great time to switch to a Git pipeline toolset!
 
