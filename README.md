@@ -1,5 +1,5 @@
 ---
-title: 'Git Pipelines'
+title: 'A Short Introduction to Git Pipelines'
 author: '[frank.jung@marlo.com.au](mailto:frank.jung@marlo.com.au)'
 date: '15 August 2019'
 output:
@@ -20,12 +20,12 @@ deploy code. These integrated CI/CD features greatly streamline solution
 delivery and have given rise to whole new ways of doing things like
 [GitOps](https://queue.acm.org/detail.cfm?id=3237207).
 
-In this article we demonstrate and compare the current pipeline features from
+In this article we examine and compare some of the current pipeline features from
 three popular Git hosting sites: [GitLab](https://gitlab.com/),
 [Bitbucket](https://bitbucket.org) and [GitHub](https://github.com/), and ask
 the question: "Is it time to switch from your current CI/CD toolset?"
 
-# Exercise
+# Example Pipeline
 
 Let's use pipelines to render the [Git
 Markdown](https://guides.github.com/features/mastering-markdown/) version of
@@ -51,13 +51,14 @@ The code for this project can be viewed from these Git repositories:
 * https://github.com/frankhjung/article-git-pipelines
 * https://gitlab.com/frankhjung1/article-git-pipelines.git
 
-# [GitLab](https://gitlab.com/)
+# GitLab
 
-[GitLab](https://gitlab.com/) was launched in 2011. For this article we are evaluating
-the features of the Community Edition.
+[GitLab](https://gitlab.com/)'s Community Edition pipelines are a well-integrated
+tool, and are our current plpeline of choice. 
 
-GitLab's pipelines are a well integrated tool. The CI/CD pipelines are easily
-accessed from the sidebar:
+## Example Pipeline
+
+The CI/CD pipelines are easily accessed from the sidebar:
 
 ![CI/CD on sidebar](images/gitlab-sidebar.png)
 
@@ -65,7 +66,7 @@ Viewing jobs gives you a pipelines history:
 
 ![Pipeline job history](images/gitlab-jobs.png)
 
-The [YAML](https://docs.gitlab.com/ce/ci/yaml/) configuration
+The [YAML](https://docs.gitlab.com/ce/ci/yaml/) configuration file
 [.gitlab-ci.yml](https://github.com/frankhjung/article-git-pipelines/blob/master/.gitlab-ci.yml)
 for this pipeline is:
 
@@ -110,8 +111,11 @@ What this pipeline configuration does is:
   * runs the `render` job which generates the given target HTML
   * on successful completion, the target HTML is archived for download
 
-GitLab is easy to configure and easy to navigate. There are many other features
+## Features and Limitations
+
+There are many other features
 including scheduling pipelines and the ability to configuring jobs by branch.
+
 One useful feature for Java / Maven projects is caching of the `.m2`
 directory. This speeds up the build as you don't have a completely new
 environment for each build, but can leverage previous cached artefacts instead. GitLab
@@ -128,20 +132,24 @@ project. For example: [JIRA](https://www.atlassian.com/software/jira) tracking,
 [Kubernetes](https://kubernetes.io/), and monitoring using
 [Prometheus](https://prometheus.io/).
 
+## Summary
+
+Overall, GitLab is easy to configure and easy to navigate, and provides Marlo with 
+our current preferred Git pipeline solution.
+
 
 # [Bitbucket](https://bitbucket.org)
 
-Atlassian's [Bitbucket](https://bitbucket.org) was launched in 2008. It
-integrates closely with other Atlassian software like JIRA, HipChat, Confluence and
-Bamboo.
+Atlassian's [Bitbucket](https://bitbucket.org) pipeline functionality and 
+configuration is similar to GitLab. 
 
-Pipeline configuration is similar to GitLab: pipelines and
-settings are easily navigated into using the side-bar.
+## Example Pipeline
+
+Again, pipelines and settings are easily navigated into using the side-bar.
 
 ![Pipeline job history](images/bitbucket-jobs.png)
 
-But there are some important differences.
-Below is the configuration file
+But there are some important differences. Below is the configuration file
 [bitbucket-pipelines.yml](https://bitbucket.org/frankhjung/articles-git-pipelines/src/master/bitbucket-pipelines.yml):
 
 ```yaml
@@ -163,9 +171,11 @@ pipelines:
                 --form files=@"${TARGET}"
 ```
 
-Here the pipeline will be triggered automatically (`trigger: automatic`) when you commit to the master branch.
+Here the pipeline will be triggered automatically (`trigger: automatic`) when 
+you commit to the master branch.
 
-You can define a Docker image (`image: conoria/alpine-pandoc`) to provision at the level of the pipeline `step`. 
+You can define a Docker image (`image: conoria/alpine-pandoc`) to provision at 
+the level of the pipeline `step`. 
 
 Variables (`${BB_AUTH_STRING}`, `${BITBUCKET_REPO_OWNER}` and `${BITBUCKET_REPO_SLUG}`) can
 be defined and read from the Bitbucket settings page. This is useful for
@@ -178,17 +188,19 @@ a secure variable be configured, as described
 [here](https://confluence.atlassian.com/bitbucket/deploy-build-artifacts-to-bitbucket-downloads-872124574.html).
 If you don't, the pipeline workspace is purged on completion.
 
+That you have to externally / manually configure repository settings has some
+benefits. The consequence though, is that there are then settings that are
+**not** recorded by your project.
+
 ![Downloads](images/bitbucket-downloads.png)
 
 Pipeline build performance is very good, where this entire step took only around
 11 seconds to complete.
 
+## Features and Limitations
+
 One limitation is that the free account limits you to only 50 minutes per month
 with 1GB storage.
-
-That you have to externally / manually configure repository settings has some
-benefits. The consequence though, is that there are then settings that are
-**not** recorded by your project.
 
 A feature of being able to customise the Docker image used at the step level is
 that your build and test steps can use different images. This is great if you
@@ -197,15 +209,15 @@ want to trial your application on a production like image.
 
 # [GitHub](https://github.com/)
 
-GitHub has been around since 2008. It was recently [acquired by
+GitHub was recently [acquired by
 Microsoft](https://blogs.microsoft.com/blog/2018/10/26/microsoft-completes-github-acquisition/).
-It hosts over 100 million repositories with more than 40 million registered
-users ([source](https://github.com/about/facts)).
 
 When you create a GitHub repository, there is an option to include [Azure
 Pipelines](https://azure.microsoft.com/en-au/services/devops/pipelines/).
 However this is not integrated to GitHub directly, but is configured under [Azure
-DevOps](https://dev.azure.com/). Broadly, the steps to set-up a pipeline are:
+DevOps](https://dev.azure.com/).
+
+Broadly, the steps to set-up a pipeline are:
 
 * sign up to Azure pipelines
 * create a project
@@ -219,9 +231,11 @@ to manually trigger a build directly from the GitHub repository. Though, if you
 commit, it will happily trigger a build for you. But, again, you need to be on
 the Azure DevOps dashboard to monitor the pipeline jobs.
 
+## Example Pipeline
+
 The following
 [YAML](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema)
-configuration uses a [Ubuntu](https://ubuntu.com) 16.04 image provided by Azure.
+configuration uses an [Ubuntu](https://ubuntu.com) 16.04 image provided by Azure.
 There are limited number of images, but they are well maintained with packages
 kept up-to-date. They come with [many pre-installed
 packages](https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/linux/Ubuntu1604-README.md).
@@ -274,31 +288,31 @@ Azure is fast as it uses images that Microsoft manages and hosts. The above job
 to install [pandoc](https://pandoc.org/) and render this page as HTML takes only
 1 minute.
 
-I found the biggest negative to Azure Pipelines was the poor integration to the
+## Features and Limitations
+
+The biggest negative to Azure Pipelines is its limited integration to the
 GitHub dashboard. Instead, you are strongly encouraged to manage pipelines using
 the [Azure
 DevOps](https://docs.microsoft.com/en-us/azure/devops/report/dashboards)
 dashboard.
 
+## Update
 
-#### Update
-
-Since I first wrote this review GitHub announced the support of pipeline
-automation called [GitHub Actions](https://github.com/features/actions/). I've
-registered to the beta program and hopefully will have some new information to
+Since the first draft of this article, GitHub announced the support of pipeline
+automation called [GitHub Actions](https://github.com/features/actions/). Marlo
+is engaged in the beta program and we will have some new information to
 post here shortly.
-
 
 # Summary
 
-At Marlo we are constantly looking at ways to increase our productivity and
-effectiveness in solution delivery. Of the three pipelines looked at here, we
+In Marlo's DevOps practice we are constantly looking at ways to increase our productivity and
+effectiveness in solution delivery. Of the three Git pipelines looked at here, we
 found GitLab the easiest to adopt and use. It's YAML based syntax is simple, but
 functionality broad. Our developers have quickly picked up and implemented
 pipeline concepts.
 
-Git pipelines will not be suitable in every circumstance. For example Ansible
-infrastructure projects. However, there are clear advantages to using a hosted
+Git pipelines will not be suitable in every circumstance - for example Ansible
+infrastructure provisioning projects. However, there are clear advantages to using a hosted
 pipeline that ensures that your project builds somewhere other than on your
 machine. It also removes the cost of building and maintaining your own
 infrastructure. This could be of great benefit to projects where time
@@ -308,19 +322,16 @@ The pipeline configuration augments your projects documentation for build, test
 and deployment. It is an independent executable description for your project
 that explicitly lists dependencies.
 
-Since writing this article in February 2019, there has been increased
-competition and continuous innovation amongst Git repository vendors: GitHub has
-introduced *actions*. In version [12.2](https://about.gitlab.com/releases/),
-GitLab has provided Directed Acyclic Graphs for their pipeline. Even [Docker
-Hub](https://hub.docker.com) has an automated pipeline that is triggered by
-changes to Git repositories.
+Since the first draft of this article was written, there has been increasing
+competition and continuous innovation amongst Git repository vendors: 
+* GitHub has introduced [GitHub Actions](https://github.com/features/actions/).
+* GitLab has announced [Directed Acyclic Graphs](https://about.gitlab.com/2019/08/22/gitlab-12-2-released/#directed-acyclic-graphs-dag-for-gitlab-pipelines) for their pipeline. 
+* Even [Docker Hub](https://hub.docker.com) now has an automated pipeline that 
+is triggered by changes to Git repositories.
 
-So, yes: I think it *is* a great time to switch to a Git CI/CD toolset!
-
+So, yes: it *is* a great time to switch to a Git pipeline toolset!
 
 # Links
-
-
 
 There are many more repository hosting sites that offer pipelines. You may like
 to explore:
