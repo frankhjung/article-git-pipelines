@@ -1,0 +1,16 @@
+name: render and publish article
+
+on: [push]
+
+jobs:
+  build:
+    name: render
+    # runs-on: docker://frankhjung/pandoc:latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1.0.0
+        with:
+          ref: refs/heads/actions
+          fetch-depth: 1
+      - run: /usr/bin/dpkg -l
+      # run: make
