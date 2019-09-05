@@ -1,20 +1,13 @@
-image: conoria/alpine-pandoc
+---
 
 variables:
   TARGET: README.html
 
-stages:
-  - build
-
-before_script:
-  - apk update
-  - apk add make
-
 render:
   stage: build
+  image: frankhjung/pandoc:latest
   script:
-    - make
+    - make ${TARGET}
   artifacts:
     paths:
-      - $TARGET
-
+      - ${TARGET}

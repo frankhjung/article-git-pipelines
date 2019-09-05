@@ -2,10 +2,17 @@
 title: 'A Short Introduction to Git Pipelines'
 author: '[frank.jung@marlo.com.au](mailto:frank.jung@marlo.com.au)'
 date: '15 August 2019'
+header-includes:
+  - \usepackage{fancyhdr}
+  - \usepackage{graphicx}
+  - \pagestyle{fancy}
+  - \fancyhead[L]{\includegraphics[height=15mm]{images/themarlogroup.png}}
+  - \fancyfoot[L]{© The Marlo Group 2019}
 output:
   html_document: default
 ---
 
+![Silver Pipes by jiawei cui](images/banner.png)
 
 # Introduction
 
@@ -124,8 +131,8 @@ also provides a _clear cache_ button on the pipeline page.
 GitLab also supports hosting of static
 [pages](https://about.gitlab.com/product/pages/). This is simple to set-up and
 use, requiring only an additional `pages` job in the deployment `stage` to move
-static content into a directory called `public`. This makes it very easy to host
-a project's generated documentation and test results.
+static content into a directory called `public`. This makes it easy to host a
+project's generated documentation and test results.
 
 Finally, GitLab provides additional services that can be integrated with your
 project. For example: [JIRA](https://www.atlassian.com/software/jira) tracking,
@@ -194,8 +201,8 @@ benefits. The consequence though, is that there are then settings that are
 
 ![Downloads](images/bitbucket-downloads.png)
 
-Pipeline build performance is very good, where this entire step took only around
-11 seconds to complete.
+Pipeline build performance is good, where this entire step took only around 11
+seconds to complete.
 
 ## Features and Limitations
 

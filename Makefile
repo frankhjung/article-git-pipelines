@@ -6,10 +6,10 @@ default:	README.html
 .SUFFIXES:	.md .html .pdf
 
 .md.html:
-	@pandoc --css article.css --to html4 --output $@ --self-contained --standalone --section-divs $<
+	@pandoc --from markdown --css article.css --to html4 --output $@ --self-contained --standalone --section-divs $<
 
 .md.pdf:
-	@pandoc --css article.css --to latex --output $@ --self-contained --standalone --section-divs $<
+	@pandoc --from markdown  --css article.css --to latex --output $@ --self-contained --standalone --section-divs $<
 
 .PHONY: clean
 clean:
