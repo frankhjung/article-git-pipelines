@@ -6,11 +6,14 @@ default:	README.html
 .SUFFIXES:	.md .html .pdf
 
 .md.html:
-	@pandoc --css article.css --to html4 --output $@ --self-contained --standalone --section-divs $<
+	@mkdir -p public
+	@pandoc --css article.css --to html4 --output public/$@ --self-contained --standalone --section-divs $<
+	@cp -p public/$@ public/index.html
 
 .md.pdf:
-	@pandoc --css article.css --to latex --output $@ --self-contained --standalone --section-divs $<
+	@mkdir -p public
+	@pandoc --css article.css --to latex --output public/$@ --self-contained --standalone --section-divs $<
 
 .PHONY: clean
 clean:
-	@$(RM) -rf README.html README.pdf
+	@$(RM) -rf public

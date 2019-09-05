@@ -2,10 +2,17 @@
 title: 'A Short Introduction to Git Pipelines'
 author: '[frank.jung@marlo.com.au](mailto:frank.jung@marlo.com.au)'
 date: '15 August 2019'
+header-includes:
+  - \usepackage{fancyhdr}
+  - \usepackage{graphicx}
+  - \pagestyle{fancy}
+  - \fancyhead[L]{\includegraphics[height=15mm]{images/themarlogroup.png}}
+  - \fancyfoot[L]{© The Marlo Group 2019}
 output:
   html_document: default
 ---
 
+![Silver Pipes by jiawei cui](images/banner.png)
 
 # Introduction
 
